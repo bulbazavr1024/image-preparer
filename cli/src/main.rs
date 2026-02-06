@@ -7,16 +7,16 @@ use indicatif::{ProgressBar, ProgressStyle};
 use rayon::prelude::*;
 
 use image_preparer::cli::{Cli, Command};
-use image_preparer::config::{ProcessingConfig, StripMode};
-use image_preparer::converter::{ConvertFormat, convert_image};
-use image_preparer::format::ImageFormat;
 use image_preparer::io::{collect_files, create_backup, read_file, resolve_output, write_file};
-use image_preparer::pipeline::Pipeline;
-use image_preparer::processor::png::{PngProcessor, inspect_png};
-use image_preparer::processor::mp3::{Mp3Processor, inspect_mp3};
-use image_preparer::processor::webp::{WebpProcessor, inspect_webp};
-use image_preparer::processor::mp4::{Mp4Processor, inspect_mp4, extract_frames_to_png};
 use image_preparer::report::{FileResult, Report};
+use image_preparer_core::config::{ProcessingConfig, StripMode};
+use image_preparer_core::converter::{ConvertFormat, convert_image};
+use image_preparer_core::format::ImageFormat;
+use image_preparer_core::pipeline::Pipeline;
+use image_preparer_core::processor::png::{PngProcessor, inspect_png};
+use image_preparer_core::processor::mp3::{Mp3Processor, inspect_mp3};
+use image_preparer_core::processor::webp::{WebpProcessor, inspect_webp};
+use image_preparer_core::processor::mp4::{Mp4Processor, inspect_mp4, extract_frames_to_png};
 
 fn main() -> Result<()> {
     let cli = Cli::parse();

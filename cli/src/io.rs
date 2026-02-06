@@ -3,8 +3,8 @@ use std::path::{Path, PathBuf};
 
 use walkdir::WalkDir;
 
-use crate::error::ProcessingError;
-use crate::format::ImageFormat;
+use image_preparer_core::error::ProcessingError;
+use image_preparer_core::format::ImageFormat;
 
 /// Collect all supported image files from the input path.
 /// If `recursive` is true, walk subdirectories.
@@ -22,27 +22,24 @@ pub fn collect_files(input: &Path, recursive: bool) -> Result<Vec<PathBuf>, Proc
 
     let max_depth = if recursive { usize::MAX } else { 1 };
 
-    let files: Result<Vec<_>, _> = WalkDir::new(input)
-        .max_depth(max_depth)
-        .into_iter()
-        .filter_map(|entry| {
-            let entry = match entry {
-                Ok(e) => e,
-                Err(e) => return Some(Err(ProcessingError::from(e))),
-            };
-            if !entry.file_type().is_file() {
-                return None;
+    let mut files = Vec::new();
+    for entry in WalkDir::new(input).max_depth(max_depth) {
+        let entry = entry.map_err(|e| {
+            ProcessingError::ReadFile {
+                path: input.to_path_buf(),
+                source: std::io::Error::new(std::io::ErrorKind::Other, e.to_string()),
             }
-            let path = entry.into_path();
-            if ImageFormat::from_path(&path).is_some() {
-                Some(Ok(path))
-            } else {
-                None
-            }
-        })
-        .collect();
+        })?;
+        if !entry.file_type().is_file() {
+            continue;
+        }
+        let path = entry.into_path();
+        if ImageFormat::from_path(&path).is_some() {
+            files.push(path);
+        }
+    }
 
-    files
+    Ok(files)
 }
 
 /// Resolve the output path for a given input file.

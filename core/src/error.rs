@@ -29,7 +29,4 @@ pub enum ProcessingError {
 
     #[error("optimization failed: {0}")]
     Optimize(String),
-
-    #[error("directory walk error: {0}")]
-    WalkDir(#[from] walkdir::Error),
 }

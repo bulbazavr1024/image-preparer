@@ -21,8 +21,10 @@ tokio.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 
-# Image processing (reuse from workspace)
-image.workspace = true
+# Core processing logic
+image_preparer_core = { path = "../core" }
+
+# Error handling & logging
 anyhow.workspace = true
 thiserror.workspace = true
 log.workspace = true
@@ -36,6 +38,3 @@ mime = "0.3"
 # File handling
 tempfile = "3"
 uuid = { version = "1", features = ["v4"] }
-
-# CLI library (shared logic)
-image_preparer = { path = "../cli" }

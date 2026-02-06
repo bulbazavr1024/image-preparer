@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
 
-use crate::config::{ProcessingConfig, StripMode};
+use image_preparer_core::config::{ProcessingConfig, StripMode};
 
 /// CLI tool for image/video compression, conversion, and metadata management
 #[derive(Debug, Parser)]
@@ -26,7 +26,7 @@ pub enum Command {
         /// Output file or directory (default: overwrite in-place)
         output: Option<PathBuf>,
 
-        /// Quantization quality 0–100
+        /// Quantization quality 0-100
         #[arg(short, long, default_value_t = 80, value_parser = clap::value_parser!(u8).range(0..=100))]
         quality: u8,
 
@@ -39,7 +39,7 @@ pub enum Command {
         no_lossy: bool,
 
         /// Metadata strip mode
-        #[arg(long, value_enum, default_value_t = StripMode::All)]
+        #[arg(long, default_value = "all")]
         strip: StripMode,
 
         /// Process directories recursively

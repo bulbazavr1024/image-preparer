@@ -7,15 +7,14 @@ use serde::Serialize;
 use std::io::Write as IoWrite;
 use tempfile::NamedTempFile;
 
-// Re-export from CLI library
-use image_preparer::config::{ProcessingConfig, StripMode};
-use image_preparer::converter::{ConvertFormat, convert_image};
-use image_preparer::format::ImageFormat;
-use image_preparer::pipeline::Pipeline;
-use image_preparer::processor::png::PngProcessor;
-use image_preparer::processor::webp::WebpProcessor;
-use image_preparer::processor::mp3::Mp3Processor;
-use image_preparer::processor::mp4::Mp4Processor;
+use image_preparer_core::config::{ProcessingConfig, StripMode};
+use image_preparer_core::converter::{ConvertFormat, convert_image};
+use image_preparer_core::format::ImageFormat;
+use image_preparer_core::pipeline::Pipeline;
+use image_preparer_core::processor::png::PngProcessor;
+use image_preparer_core::processor::webp::WebpProcessor;
+use image_preparer_core::processor::mp3::Mp3Processor;
+use image_preparer_core::processor::mp4::Mp4Processor;
 
 #[derive(Debug, Serialize)]
 struct ApiResponse<T> {

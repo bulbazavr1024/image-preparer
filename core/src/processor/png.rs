@@ -191,7 +191,7 @@ impl ImageProcessor for PngProcessor {
     }
 }
 
-/// Decode PNG → quantize colors → encode as indexed palette PNG
+/// Decode PNG -> quantize colors -> encode as indexed palette PNG
 fn quantize_png(input: &[u8], config: &ProcessingConfig) -> Result<Vec<u8>, ProcessingError> {
     // Step 1: Decode to RGBA pixels
     let img = image::load_from_memory_with_format(input, image::ImageFormat::Png)

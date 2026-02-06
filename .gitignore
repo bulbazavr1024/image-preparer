@@ -1,0 +1,29 @@
+# Rust
+/target/
+/cli/target/
+/server/target/
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files and output
+cli/input/
+cli/output/
+
+/input/
+/output/
+/test_*/
+*.bak
+
+# Temporary files
+*.tmp
+*.temp

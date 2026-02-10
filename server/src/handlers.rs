@@ -12,9 +12,11 @@ use image_preparer_core::converter::{ConvertFormat, convert_image};
 use image_preparer_core::format::ImageFormat;
 use image_preparer_core::pipeline::Pipeline;
 use image_preparer_core::processor::png::PngProcessor;
+use image_preparer_core::processor::jpg::JpgProcessor;
 use image_preparer_core::processor::webp::WebpProcessor;
 use image_preparer_core::processor::mp3::Mp3Processor;
 use image_preparer_core::processor::mp4::Mp4Processor;
+use image_preparer_core::processor::wav::WavProcessor;
 
 #[derive(Debug, Serialize)]
 struct ApiResponse<T> {
@@ -102,8 +104,10 @@ pub async fn compress(mut multipart: Multipart) -> Result<Response, StatusCode> 
     // Build pipeline
     let mut pipeline = Pipeline::new();
     pipeline.register(Box::new(PngProcessor));
+    pipeline.register(Box::new(JpgProcessor));
     pipeline.register(Box::new(WebpProcessor));
     pipeline.register(Box::new(Mp3Processor));
+    pipeline.register(Box::new(WavProcessor));
     pipeline.register(Box::new(Mp4Processor));
 
     // Create config

@@ -14,7 +14,9 @@ use image_preparer_core::converter::{ConvertFormat, convert_image};
 use image_preparer_core::format::ImageFormat;
 use image_preparer_core::pipeline::Pipeline;
 use image_preparer_core::processor::png::{PngProcessor, inspect_png};
+use image_preparer_core::processor::jpg::{JpgProcessor, inspect_jpg};
 use image_preparer_core::processor::mp3::{Mp3Processor, inspect_mp3};
+use image_preparer_core::processor::wav::{WavProcessor, inspect_wav};
 use image_preparer_core::processor::webp::{WebpProcessor, inspect_webp};
 use image_preparer_core::processor::mp4::{Mp4Processor, inspect_mp4, extract_frames_to_png};
 
@@ -79,7 +81,9 @@ fn handle_compress(
     // Build pipeline
     let mut pipeline = Pipeline::new();
     pipeline.register(Box::new(PngProcessor));
+    pipeline.register(Box::new(JpgProcessor));
     pipeline.register(Box::new(Mp3Processor));
+    pipeline.register(Box::new(WavProcessor));
     pipeline.register(Box::new(WebpProcessor));
     pipeline.register(Box::new(Mp4Processor));
 
@@ -302,11 +306,17 @@ fn handle_inspect(input: &Path, recursive: bool) -> Result<()> {
             Some(ImageFormat::Png) => {
                 inspect_png(&data)?;
             }
+            Some(ImageFormat::Jpg) => {
+                inspect_jpg(&data)?;
+            }
             Some(ImageFormat::Webp) => {
                 inspect_webp(&data)?;
             }
             Some(ImageFormat::Mp4) => {
                 inspect_mp4(&data)?;
+            }
+            Some(ImageFormat::Wav) => {
+                inspect_wav(&data)?;
             }
             None => {
                 println!("  Unsupported file format");

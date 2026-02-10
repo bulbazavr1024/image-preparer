@@ -1,5 +1,7 @@
 pub mod png;
+pub mod jpg;
 pub mod mp3;
+pub mod wav;
 pub mod webp;
 pub mod mp4;
 
